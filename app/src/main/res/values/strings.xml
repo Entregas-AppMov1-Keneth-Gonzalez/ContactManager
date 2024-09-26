@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ContactManager</string>
+    <string name="tituloBotonMensaje">Desplegar Mensaje</string>
+    <string name="MensajeDesplegado">Mensaje desde strings</string>
+    <string name="Pantalla2">Ir a pantalla 2</string>
+    <string name="Pantalla1">Ir a inicio</string>
+</resources>
