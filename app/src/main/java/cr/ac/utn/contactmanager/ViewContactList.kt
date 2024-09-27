@@ -9,22 +9,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity2 : AppCompatActivity() {
+class ViewContactList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main2)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainPantalla2)) { v, insets ->
+        setContentView(R.layout.activity_view_contact_list)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        val btnIrHome: Button = findViewById<Button>(R.id.btn2Home)
-        btnIrHome.setOnClickListener(View.OnClickListener { view ->
-            val intentIrHome = Intent(this, MainActivity::class.java)
-            startActivity(intentIrHome)
+        val btnViewContactListtoHome: Button = findViewById<Button>(R.id.btnViewContactListtoHome)
+        btnViewContactListtoHome.setOnClickListener(View.OnClickListener { view ->
+            val intentViewContactListtoHome = Intent(this, MainActivity::class.java)
+            startActivity(intentViewContactListtoHome)
         })
-
     }
 }

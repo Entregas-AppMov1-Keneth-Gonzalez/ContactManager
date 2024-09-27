@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ContactManager</string>
+    <string name="addContact">Agregar Contacto</string>
+    <string name="viewContactList">Monstar Lista Contactos</string>
+    <string name="iraInicio">Ir a Inicio</string>
+    <string name="save">Guardar</string>
+    <string name="delete">Eliminar</string>
+    <string name="cancel">Cancelar</string>
+</resources>

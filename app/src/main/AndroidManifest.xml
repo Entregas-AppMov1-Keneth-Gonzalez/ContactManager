@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ContactManager"
         tools:targetApi="31">
         <activity
+            android:name=".ViewContactList"
+            android:exported="false" />
+        <activity
+            android:name=".AddContact"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity2"
             android:exported="false" />
         <activity

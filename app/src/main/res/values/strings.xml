@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">ContactManager</string>
-    <string name="tituloBotonMensaje">Desplegar Mensaje</string>
-    <string name="MensajeDesplegado">Mensaje desde strings</string>
-    <string name="Pantalla2">Ir a pantalla 2</string>
-    <string name="Pantalla1">Ir a inicio</string>
+    <string name="addContact">Add Contact</string>
+    <string name="viewContactList">View Contact List</string>
+    <string name="iraInicio">Go Home</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>

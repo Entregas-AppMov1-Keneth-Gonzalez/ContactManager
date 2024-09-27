@@ -1,16 +1,19 @@
 package cr.ac.utn.contactmanager
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,16 +24,25 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val btnMensaje: Button = findViewById<Button>(R.id.btnMainMensaje)
-        btnMensaje.setOnClickListener(View.OnClickListener { view ->
-            Toast.makeText(this, "Mensaje desplegado".toString(), Toast.LENGTH_LONG).show()
+        val btnAddContact: Button = findViewById<Button>(R.id.btnMainAddContact)
+        btnAddContact.setOnClickListener(View.OnClickListener { view ->
+            val intentAddContact = Intent(this, AddContact::class.java)
+            startActivity(intentAddContact)
         })
 
-        val btnIrPantalla2: Button = findViewById<Button>(R.id.btnPantalla2)
-        btnIrPantalla2.setOnClickListener(View.OnClickListener { view ->
-            val intentIrPantalla2 = Intent(this, MainActivity2::class.java)
-            startActivity(intentIrPantalla2)
+        val btnViewContactList: Button = findViewById<Button>(R.id.btnMainViewContactList)
+        btnViewContactList.setOnClickListener(View.OnClickListener { view ->
+            val intentViewContactList = Intent(this, ViewContactList::class.java)
+            startActivity(intentViewContactList)
         })
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        var inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+
+        return true
+    }
+
 }
