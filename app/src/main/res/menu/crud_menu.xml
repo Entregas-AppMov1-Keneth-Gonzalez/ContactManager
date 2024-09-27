@@ -4,15 +4,12 @@
 
     <item
         android:id="@+id/menu_Save"
-        android:title="@string/save"
-        app:showAsAction="always" />
+        android:title="@string/save" />
     <item
         android:id="@+id/menu_Delete"
         android:enabled="false"
-        android:title="@string/delete"
-        app:showAsAction="always" />
+        android:title="@string/delete" />
     <item
         android:id="@+id/menu_Cancel"
-        android:title="@string/cancel"
-        app:showAsAction="always" />
+        android:title="@string/cancel" />
 </menu>

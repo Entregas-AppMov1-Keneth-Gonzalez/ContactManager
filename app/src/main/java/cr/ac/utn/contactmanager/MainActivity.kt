@@ -1,10 +1,12 @@
 package cr.ac.utn.contactmanager
 
+import Util.util
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -26,23 +28,34 @@ class MainActivity : AppCompatActivity() {
 
         val btnAddContact: Button = findViewById<Button>(R.id.btnMainAddContact)
         btnAddContact.setOnClickListener(View.OnClickListener { view ->
-            val intentAddContact = Intent(this, AddContact::class.java)
-            startActivity(intentAddContact)
+            util.openActivity(this, AddContact::class.java)
         })
 
         val btnViewContactList: Button = findViewById<Button>(R.id.btnMainViewContactList)
         btnViewContactList.setOnClickListener(View.OnClickListener { view ->
-            val intentViewContactList = Intent(this, ViewContactList::class.java)
-            startActivity(intentViewContactList)
+            util.openActivity(this, ViewContactList::class.java)
         })
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        var inflater: MenuInflater = menuInflater
+        val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
-
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.menu_AddContact -> {
+                util.openActivity(this, AddContact::class.java)
+                return true
+            }
+            R.id.menu_ContactList -> {
+                util.openActivity(this, ViewContactList::class.java)
+                return true
+            } else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
 }
