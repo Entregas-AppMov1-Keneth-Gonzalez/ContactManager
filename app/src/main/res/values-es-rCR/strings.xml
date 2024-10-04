@@ -7,4 +7,13 @@
     <string name="save">Guardar</string>
     <string name="delete">Eliminar</string>
     <string name="cancel">Cancelar</string>
+    <string name="ContactId">Id Contacto</string>
+    <string name="ContactName">Nombre</string>
+    <string name="ContactLastName">Apellido</string>
+    <string name="ContactPhone">Telefono</string>
+    <string name="ContactEmail">Correo</string>
+    <string name="ContactAddress">Direccion</string>
+    <string name="msgContactNotFound">El contacto no existe</string>
+    <string name="msgSave">Guardado Correctamente</string>
+    <string name="msgMissingData">Falta informacion</string>
 </resources>

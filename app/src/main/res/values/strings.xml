@@ -6,4 +6,13 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="ContactId">ContactID</string>
+    <string name="ContactName">Name</string>
+    <string name="ContactLastName">Last Name</string>
+    <string name="ContactPhone">Phone</string>
+    <string name="ContactEmail">Email</string>
+    <string name="ContactAddress">Address</string>
+    <string name="msgContactNotFound">The contact does not exist</string>
+    <string name="msgSave">Succesfull</string>
+    <string name="msgMissingData">Missing values</string>
 </resources>
