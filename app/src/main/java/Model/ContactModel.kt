@@ -1,44 +1,62 @@
 package Model
 
+import Data.MemoryManager
 import Entities.Contact
-import android.content.res.Resources
+import Interfaces.IDBManager
+import android.content.Context
 import cr.ac.utn.contactmanager.R
 
 class ContactModel {
-    companion object {
-        private var contactList = mutableListOf<Contact>()
+    private var dbManager: IDBManager = MemoryManager
+    private lateinit var _context: Context
 
-        fun addContact(contact: Contact) {
-            contactList.add(contact)
+    constructor(context: Context){
+        _context = context
+    }
+
+    fun addContact(contact: Contact) {
+        dbManager.add(contact)
+    }
+
+    fun getContacts() = dbManager.getAll()
+
+    fun getContact(id: String) : Contact {
+        var result = dbManager.getById(id)
+        if(result == null){
+            val message = _context.getString(R.string.msgContactNotFound)
+            throw Exception(message)
+        }else{
+            return result
         }
+    }
 
-        fun getContacts() = contactList.toList()
+    fun getContactNames(): List<String> {
+        val names = mutableListOf<String>()
+        dbManager.getAll().forEach{i-> names.add(i.fullName)}
+        return names.toList()
+    }
 
-        fun getContact(id: String) : Contact {
-            try{
-                var result = contactList.filter { (it.id == id) }
-                if (!result.any()){
-                    throw Exception(Resources.getSystem().getString(R.string.msgContactNotFound))
-                }else{
-                    return result[0]
-                }
-            }catch (e: Exception){
-                throw e
-            }
+    fun remoContact(id: String) {
+        var result = dbManager.getById(id)
+        if(result == null){
+            val message = _context.getString(R.string.msgContactNotFound)
+            throw Exception(message)
+        }else{
+            dbManager.remove(id)
         }
+    }
 
-        fun getContactNames(): List<String> {
-            val names = mutableListOf<String>()
-            contactList.forEach{i-> names.add(i.fullName)}
-            return names.toList()
-        }
+    fun updateContact (contact: Contact) {
+        dbManager.update(contact)
+    }
 
-        fun remoContact(id: String) {
-            try {
-                contactList.remove(getContact(id))
-            }catch (e: Exception){
-                throw e
-            }
+    fun getContactByFullName (fullName: String): Contact {
+        var result = dbManager.getByFullName(fullName)
+        if(result == null){
+            val message = _context.getString(R.string.msgContactNotFound)
+            throw Exception(message)
+        }else{
+            return result
         }
     }
 }

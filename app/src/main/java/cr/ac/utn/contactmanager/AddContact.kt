@@ -2,7 +2,6 @@ package cr.ac.utn.contactmanager
 
 import Entities.Contact
 import Model.ContactModel
-import Util.util
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -25,6 +24,7 @@ class AddContact : AppCompatActivity() {
     private lateinit var txtPhone: EditText
     private lateinit var txtEmail: EditText
     private lateinit var txtAddress: EditText
+    private lateinit var contactModel: ContactModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +42,7 @@ class AddContact : AppCompatActivity() {
             startActivity(intentAddContacttoHome)
         })
 
+        contactModel = ContactModel(this)
         txtId = findViewById<EditText>(R.id.txtContact_ID)
         txtName = findViewById<EditText>(R.id.txtContact_Name)
         txtLastName = findViewById<EditText>(R.id.txtContact_LastName)
@@ -71,7 +72,6 @@ class AddContact : AppCompatActivity() {
                 return true
             } else -> super.onOptionsItemSelected(item)
         }
-
     }
 
     private fun saveContact(){
@@ -85,7 +85,7 @@ class AddContact : AppCompatActivity() {
             contact.address = txtAddress.text.toString()
 
             if (dataValidation(contact)){
-                ContactModel.addContact(contact)
+                contactModel.addContact(contact)
                 cleanScreen()
                 Toast.makeText(this, R.string.msgSave, Toast.LENGTH_LONG).show()
                 val intentAddContacttoHome = Intent(this, MainActivity::class.java)

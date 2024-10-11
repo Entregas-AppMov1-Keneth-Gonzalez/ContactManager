@@ -1,9 +1,12 @@
 package cr.ac.utn.contactmanager
 
+import Model.ContactModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,5 +28,11 @@ class ViewContactList : AppCompatActivity() {
             val intentViewContactListtoHome = Intent(this, MainActivity::class.java)
             startActivity(intentViewContactListtoHome)
         })
+
+        val contactModel = ContactModel(this)
+        val lstContact = findViewById<ListView>(R.id.lstContactList)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, contactModel.getContactNames())
+
+        lstContact.adapter = adapter
     }
 }
