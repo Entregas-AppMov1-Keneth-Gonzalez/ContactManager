@@ -1,9 +1,13 @@
 package cr.ac.utn.contactmanager
 
 import Model.ContactModel
+import Util.EXTRA_MESSAGE_CONTACT_ID
+import Util.util
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Adapter
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
@@ -34,5 +38,11 @@ class ViewContactList : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, contactModel.getContactNames())
 
         lstContact.adapter = adapter
+
+        lstContact.onItemClickListener = AdapterView.OnItemClickListener{
+            parent, view, position, id ->
+            val itemValue = lstContact.getItemAtPosition(position) as String
+            util.openActivity(this, AddContact::class.java, EXTRA_MESSAGE_CONTACT_ID, itemValue)
+        }
     }
 }

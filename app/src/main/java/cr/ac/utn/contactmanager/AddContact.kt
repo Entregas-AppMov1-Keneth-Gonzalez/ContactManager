@@ -2,6 +2,7 @@ package cr.ac.utn.contactmanager
 
 import Entities.Contact
 import Model.ContactModel
+import Util.EXTRA_MESSAGE_CONTACT_ID
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -25,6 +26,7 @@ class AddContact : AppCompatActivity() {
     private lateinit var txtEmail: EditText
     private lateinit var txtAddress: EditText
     private lateinit var contactModel: ContactModel
+    private var isEditionMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +51,15 @@ class AddContact : AppCompatActivity() {
         txtPhone = findViewById<EditText>(R.id.txtContact_Phone)
         txtEmail = findViewById<EditText>(R.id.txtContact_Email)
         txtAddress = findViewById<EditText>(R.id.txtContact_Address)
+
+        val contactInfo = intent.getStringExtra(EXTRA_MESSAGE_CONTACT_ID)
+        if (contactInfo != null && contactInfo != "") loadContact(contactInfo.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.crud_menu, menu)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -114,5 +119,21 @@ class AddContact : AppCompatActivity() {
         txtPhone.setText("")
         txtEmail.setText("")
         txtAddress.setText("")
+    }
+
+    private fun loadContact(contactInfo: String){
+        try{
+            val contact = contactModel.getContactByFullName(contactInfo)
+            txtId.setText(contact.id)
+            txtName.setText(contact.name)
+            txtLastName.setText(contact.lastName)
+            txtPhone.setText(contact.phone.toString())
+            txtEmail.setText(contact.email)
+            txtAddress.setText(contact.address)
+            isEditionMode = true
+            txtId.isEnabled = false
+        }catch (e: Exception){
+            Toast.makeText(this, e.message.toString(), Toast.LENGTH_LONG).show()
+        }
     }
 }
