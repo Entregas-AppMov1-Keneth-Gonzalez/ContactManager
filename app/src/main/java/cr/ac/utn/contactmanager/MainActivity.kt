@@ -2,6 +2,7 @@ package cr.ac.utn.contactmanager
 
 import Util.util
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -36,6 +38,25 @@ class MainActivity : AppCompatActivity() {
             util.openActivity(this, ViewContactList::class.java)
         })
 
+        val btnMainDialog: Button = findViewById<Button>(R.id.btnMainDialog)
+        btnMainDialog.setOnClickListener(View.OnClickListener {
+            DisplayDialog()
+        })
+
+    }
+
+    private fun DisplayDialog(){
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setMessage("Desea cerrar la aplicacion?").setCancelable(false).setPositiveButton("Si", DialogInterface.OnClickListener{
+            dialog, id -> finish()
+        })
+            .setNegativeButton("No", DialogInterface.OnClickListener{
+            dialog, id -> dialog.cancel()
+            })
+
+        val alert = dialogBuilder.create()
+        alert.setTitle("Titulo del dialog")
+        alert.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

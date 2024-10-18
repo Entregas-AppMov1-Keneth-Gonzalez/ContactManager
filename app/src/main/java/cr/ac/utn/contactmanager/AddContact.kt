@@ -3,6 +3,7 @@ package cr.ac.utn.contactmanager
 import Entities.Contact
 import Model.ContactModel
 import Util.EXTRA_MESSAGE_CONTACT_ID
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -13,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,6 +28,7 @@ class AddContact : AppCompatActivity() {
     private lateinit var txtEmail: EditText
     private lateinit var txtAddress: EditText
     private lateinit var contactModel: ContactModel
+    private lateinit var menuitemDelete: MenuItem
     private var isEditionMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,13 +62,33 @@ class AddContact : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.crud_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        menuitemDelete = menu!!.findItem(R.id.menu_Delete)
+        if(isEditionMode){
+            //menu?.findItem(R.id.menu_Delete)?.isVisible = true
+            menuitemDelete.isEnabled = true
+        }else{
+            //menu?.findItem(R.id.menu_Delete)?.isVisible = false
+            menuitemDelete.isEnabled = false
+        }
+        return true
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.menu_Save -> {
-            saveContact()
+                val dialogBuilder = AlertDialog.Builder(this)
+                dialogBuilder.setMessage("Desea guardar el contacto?").setCancelable(false).setPositiveButton("Si", DialogInterface.OnClickListener{
+                        dialog, id -> saveContact()
+                })
+                    .setNegativeButton("No", DialogInterface.OnClickListener{
+                            dialog, id -> dialog.cancel()
+                    })
+
+                val alert = dialogBuilder.create()
+                alert.setTitle("Titulo del dialog")
+                alert.show()
                 return true
             }
             R.id.menu_Delete -> {
@@ -89,14 +112,20 @@ class AddContact : AppCompatActivity() {
             contact.email = txtEmail.text.toString()
             contact.address = txtAddress.text.toString()
 
-            if (dataValidation(contact)){
-                contactModel.addContact(contact)
-                cleanScreen()
-                Toast.makeText(this, R.string.msgSave, Toast.LENGTH_LONG).show()
-                val intentAddContacttoHome = Intent(this, MainActivity::class.java)
-                startActivity(intentAddContacttoHome)
-            } else {
-                Toast.makeText(this, R.string.msgMissingData, Toast.LENGTH_LONG).show()
+            if(dataValidation(contact)){
+                if(!isEditionMode){
+                    contactModel.addContact(contact)
+                    val intentAddContacttoHome = Intent(this, MainActivity::class.java)
+                    startActivity(intentAddContacttoHome)
+                }else{
+                    contactModel.updateContact(contact)
+                    cleanScreen()
+                    Toast.makeText(this, "The information was saved succesfully", Toast.LENGTH_LONG).show()
+                    val intentAddContacttoHome = Intent(this, MainActivity::class.java)
+                    startActivity(intentAddContacttoHome)
+                }
+            }else{
+                Toast.makeText(this, "Missing data, please check all required information", Toast.LENGTH_LONG).show()
             }
         }catch (e: Exception){
             Toast.makeText(this, e.message.toString(), Toast.LENGTH_LONG).show()
@@ -109,7 +138,11 @@ class AddContact : AppCompatActivity() {
     }
 
     private fun deleteContact(){
+        //try{
 
+        //}catch (e: Exception){
+            //Toast.makeText(this, e.message.toString(), Toast.LENGTH_LONG).show()
+        //}
     }
 
     private fun cleanScreen(){
@@ -119,6 +152,7 @@ class AddContact : AppCompatActivity() {
         txtPhone.setText("")
         txtEmail.setText("")
         txtAddress.setText("")
+        invalidateOptionsMenu()
     }
 
     private fun loadContact(contactInfo: String){
