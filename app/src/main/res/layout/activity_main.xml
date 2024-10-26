@@ -8,6 +8,21 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/btnCustomList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="26dp"
+        android:text="@string/customList"
+        app:layout_constraintBottom_toTopOf="@+id/btnMainDialogCustom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMainDialog" />
+
+    <Button
         android:id="@+id/btnMainAddContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -28,8 +28,8 @@ class AddContact : AppCompatActivity() {
     private lateinit var txtEmail: EditText
     private lateinit var txtAddress: EditText
     private lateinit var contactModel: ContactModel
-    private lateinit var menuitemDelete: MenuItem
     private var isEditionMode: Boolean = false
+    private lateinit var menuitemDelete: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +66,10 @@ class AddContact : AppCompatActivity() {
         menuitemDelete = menu!!.findItem(R.id.menu_Delete)
         if(isEditionMode){
             //menu?.findItem(R.id.menu_Delete)?.isVisible = true
-            menuitemDelete.isEnabled = true
+            menuitemDelete.isVisible = true
         }else{
             //menu?.findItem(R.id.menu_Delete)?.isVisible = false
-            menuitemDelete.isEnabled = false
+            menuitemDelete.isVisible = false
         }
         return true
 
@@ -78,17 +78,7 @@ class AddContact : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.menu_Save -> {
-                val dialogBuilder = AlertDialog.Builder(this)
-                dialogBuilder.setMessage("Desea guardar el contacto?").setCancelable(false).setPositiveButton("Si", DialogInterface.OnClickListener{
-                        dialog, id -> saveContact()
-                })
-                    .setNegativeButton("No", DialogInterface.OnClickListener{
-                            dialog, id -> dialog.cancel()
-                    })
-
-                val alert = dialogBuilder.create()
-                alert.setTitle("Titulo del dialog")
-                alert.show()
+                saveContact()
                 return true
             }
             R.id.menu_Delete -> {

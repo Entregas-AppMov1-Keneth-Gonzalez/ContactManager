@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             util.openActivity(this, ViewContactList::class.java)
         })
 
+        val btnCustomList = findViewById<Button>(R.id.btnCustomList)
+        btnCustomList.setOnClickListener(View.OnClickListener {
+            util.openActivity(this, CustomListActivity::class.java)
+        })
+
         val btnMainDialog: Button = findViewById<Button>(R.id.btnMainDialog)
         btnMainDialog.setOnClickListener(View.OnClickListener {
             DisplayDialog()

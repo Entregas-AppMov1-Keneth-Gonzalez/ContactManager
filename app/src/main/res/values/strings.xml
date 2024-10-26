@@ -15,4 +15,5 @@
     <string name="msgContactNotFound">The contact does not exist</string>
     <string name="msgSave">Succesfull</string>
     <string name="msgMissingData">Missing values</string>
+    <string name="customList">Custom List</string>
 </resources>
