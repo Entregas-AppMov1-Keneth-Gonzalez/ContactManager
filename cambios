@@ -1,0 +1,57 @@
+Parece que el problema puede estar relacionado con varios aspectos:
+
+Permisos obsoletos o innecesarios: Desde Android 11 (API nivel 30), los permisos relacionados con el almacenamiento han cambiado. READ_EXTERNAL_STORAGE y WRITE_EXTERNAL_STORAGE han sido reemplazados por otros métodos de acceso a archivos. Si estás apuntando a una versión de Android 11 o superior, debes usar un enfoque más adecuado para acceder a archivos, como el almacenamiento aislado (Scoped Storage) o el permiso READ_MEDIA_IMAGES, como ya lo tienes en tu manifiesto.
+
+Para Android 11 y superior, el permiso WRITE_EXTERNAL_STORAGE ya no es necesario ni recomendado, ya que el acceso a los archivos es mucho más restringido. Si necesitas acceso a la cámara o al almacenamiento de imágenes, puedes usar READ_MEDIA_IMAGES y CAMERA.
+Compatibilidad con versiones anteriores: Si estás apuntando a versiones anteriores de Android y deseas acceder al almacenamiento, deberías asegurarte de que tanto READ_EXTERNAL_STORAGE como WRITE_EXTERNAL_STORAGE están correctamente definidos en el manifiesto. Sin embargo, en versiones modernas de Android, WRITE_EXTERNAL_STORAGE ya no tiene el mismo comportamiento.
+
+Cambios en los permisos para el almacenamiento: A partir de Android 10 (API nivel 29), el permiso WRITE_EXTERNAL_STORAGE es restringido a menos casos de uso, y se recomienda usar MediaStore para acceder a medios (como fotos, videos) en el almacenamiento externo.
+
+Posible problema de sincronización o configuración en Android Studio: Si el código aparece en rojo pero los permisos están bien declarados en el manifiesto, podría ser un problema de sincronización con el archivo AndroidManifest.xml. Intenta lo siguiente:
+
+Sincroniza el proyecto: En Android Studio, haz clic en File -> Sync Project with Gradle Files.
+Reinicia Android Studio: A veces un reinicio puede resolver problemas de resaltado incorrecto de código.
+Verifica la versión de tu SDK: Asegúrate de que tu proyecto está apuntando a la versión correcta de Android (nivel de API).
+¿Has solicitado permisos en tiempo de ejecución?: Aunque hayas declarado los permisos en el manifiesto, también necesitas pedirlos en tiempo de ejecución para las versiones de Android 6.0 (API nivel 23) o superior. Parece que lo estás haciendo correctamente con ActivityCompat.requestPermissions(), pero asegúrate de que la comprobación de permisos en tiempo de ejecución se realiza de forma adecuada.
+
+Sugerencia de solución
+Primero, asegúrate de que tu manifiesto está correctamente configurado para manejar permisos según el nivel de API que estás utilizando. Aquí hay una versión ajustada de tu manifiesto y código.
+
+Manifiesto para Android 11+ (API 30+):
+xml
+Copiar código
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+<uses-feature android:name="android.hardware.camera" android:required="false" />
+Manifiesto para Android 9 y versiones anteriores (API 28 o menor):
+xml
+Copiar código
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-feature android:name="android.hardware.camera" android:required="false" />
+Código Kotlin (solicitar permisos en tiempo de ejecución):
+kotlin
+Copiar código
+private fun requestPermissions() {
+    // Solicitar permisos solo si no han sido concedidos
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+        ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ),
+            CAMERA_REQUEST_CODE
+        )
+    }
+}
+Resumen de pasos:
+Asegúrate de que los permisos estén correctamente definidos en el manifiesto para la versión de Android que estás usando.
+Usa permisos modernos como READ_MEDIA_IMAGES en lugar de READ_EXTERNAL_STORAGE para Android 11 o superior.
+Asegúrate de que tu código Kotlin está pidiendo permisos en tiempo de ejecución correctamente.
+Si después de esto sigue apareciendo en rojo, intenta sincronizar el proyecto o reiniciar Android Studio para verificar que no sea un error visual.
