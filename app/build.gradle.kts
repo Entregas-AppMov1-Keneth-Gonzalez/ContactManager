@@ -4,17 +4,22 @@ plugins {
 }
 
 android {
-    namespace = "cr.ac.utn.contactmanager"
+    namespace = "cr.ac.utn.appmovil.contactmanager"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "cr.ac.utn.contactmanager"
-        minSdk = 30
+        applicationId = "cr.ac.utn.appmovil.contactmanager"
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures{
+        viewBinding = true
+        dataBinding = true
     }
 
     buildTypes {
@@ -42,6 +47,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.ui.android)
+    implementation(libs.volley)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
